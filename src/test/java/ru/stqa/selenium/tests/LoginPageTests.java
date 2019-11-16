@@ -1,15 +1,13 @@
-package ru.stqa.selenium;
+package ru.stqa.selenium.tests;
 
-import org.openqa.selenium.support.PageFactory;
-import org.testng.Assert;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-//import pages.HomePageAuthHelper;
-//import pages.HomePageHelper;
-//import pages.LoginPageHelper;
+import org.openqa.selenium.support.PageFactory;//
+import org.testng.Assert;//
+import org.testng.annotations.BeforeMethod;//
+import org.testng.annotations.Test;//
 import ru.stqa.selenium.pages.HomePageAuthHelper;
 import ru.stqa.selenium.pages.HomePageHelper;
 import ru.stqa.selenium.pages.LoginPageHelper;
+import ru.stqa.selenium.util.DataProviders;//
 
 public class LoginPageTests extends TestBase {
     HomePageHelper homePage;
@@ -17,10 +15,7 @@ public class LoginPageTests extends TestBase {
     HomePageAuthHelper homePageAuth;
 
     @BeforeMethod
-    public void initTests() {
-      /* homePage = new HomePageHelper(driver);
-        loginPage = new LoginPageHelper(driver);
-        homePageAuth = new HomePageAuthHelper(driver);*/
+    public void initTests() throws InterruptedException {
 
         loginPage = PageFactory.initElements(driver, LoginPageHelper.class);
         homePageAuth = PageFactory.initElements(driver, HomePageAuthHelper.class);
@@ -31,23 +26,22 @@ public class LoginPageTests extends TestBase {
         .waitUntilLoginPageIsLoaded();
     }
 
-    @Test
-    public void loginPositiveTest() {
+    @Test(dataProviderClass = DataProviders.class, dataProvider = "loginPositiveT")
+    public void loginPositiveTest(String login, String password) {
 
-        loginPage.initLoginTests(LOGIN, PASSWORD);
+        loginPage.initLoginTests(login, password);
         homePageAuth.waitUntilHomePageAuthIsLoaded();
-        Assert.assertTrue(homePageAuth.correctAuthorizationIsEnded());
+        Assert.assertTrue(homePageAuth.correctAuthorizationIsEnded(login));
 
     }
 
-    @Test
-    public void loginNegativeTest() {
-        loginPage.initLoginTests(LOGIN, LOGIN);
+    @Test(dataProviderClass = DataProviders.class, dataProvider = "loginNegativeT")
+    public void loginNegativeTest(String login, String password) throws InterruptedException {
+        loginPage.initLoginTests(login, password);
         Assert.assertTrue(loginPage.loginToTheSystemIncorrect());
         loginPage.closeLoginWindowByX();
         Assert.assertTrue(homePage.correctHomePageIsLoaded());
     }
-
 
     @Test
     public void loginExitByCancelTest() {

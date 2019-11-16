@@ -3,8 +3,9 @@ package ru.stqa.selenium.pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+//import pages.PageBase;
 
-public class ProfilePageHelper extends PageBase {
+public class Profile2PageHelper extends PageBase {
     @FindBy(id = "profile")
     WebElement profileButton;
 
@@ -29,11 +30,14 @@ public class ProfilePageHelper extends PageBase {
     @FindBy(xpath = "//span[@id='fieldobjfamilyName']//input")
     WebElement fieldEditedLastName;
 
-    public ProfilePageHelper(WebDriver driver) {
+    @FindBy(id = "imgavatarinprofilefamily")
+    WebElement avatarOfTheFamily;
+
+    public Profile2PageHelper(WebDriver driver) {
         super(driver);
     }
 
-    public ProfilePageHelper openProfilePage() throws InterruptedException {
+    public Profile2PageHelper openProfilePage() throws InterruptedException {
         openPage(profileButton, profilePhoto);
         return this;
     }
@@ -46,6 +50,7 @@ public class ProfilePageHelper extends PageBase {
         array = saveDataFromTheProfileOrFamilyPage(familySign);
         return array;
     }
+
     public String saveProfile() throws InterruptedException {
         scrollPageUp();
         String profileFamilyName;
@@ -56,19 +61,23 @@ public class ProfilePageHelper extends PageBase {
         scrollPageDown();
         //----------------------------??????---------------------------------
         waitUntilElementIsVisible(fieldSavedLastName, 50);
-        profileFamilyName =fieldSavedLastName.getText();
+        profileFamilyName = fieldSavedLastName.getText();
         //----------------------------??????---------------------------------
         System.out.println("Family Name in the profile: " + profileFamilyName);
         return profileFamilyName;
     }
 
-    public ProfilePageHelper changeLastName(String lastName) throws InterruptedException {
+    public Profile2PageHelper changeLastName(String lastName) throws InterruptedException {
         //Thread.sleep(5000);
+        waitUntilElementIsVisible(helpSelectInfoInProfile, 50);
+        waitUntilElementIsVisible(avatarOfTheFamily, 50);
+
         openElementByLocator(editButton);
         //openElementById("idbtneditprofile");
         waitUntilElementIsVisible(helpSelectInfoInProfile, 50);
-        Thread.sleep(5000);
-        waitUntilElementIsVisible(fieldEditedLastName,20);
+        waitUntilElementIsVisible(avatarOfTheFamily, 50);
+       // Thread.sleep(5000);
+        waitUntilElementIsVisible(fieldEditedLastName, 20);
         fieldEditedLastName.click();
 
         fieldEditedLastName.clear();
@@ -76,14 +85,17 @@ public class ProfilePageHelper extends PageBase {
         //Thread.sleep(7000);
         return this;
     }
+
     public String newLastNameGeneration() {
         waitUntilElementIsClickable(fieldSavedLastName, 50);
 
-        String profileFamilyName =fieldSavedLastName.getText();
+        String profileFamilyName = fieldSavedLastName.getText();
         System.out.println("profileFamilyName: " + profileFamilyName);
         String lastName;
         lastName = "Shapiro";
-        if(!(profileFamilyName.equals("Abramov"))) {lastName = "Abramov";}
+        if (!(profileFamilyName.equals("Abramov"))) {
+            lastName = "Abramov";
+        }
         System.out.println("lastName new: " + lastName);
         return lastName;
     }
@@ -97,34 +109,35 @@ public class ProfilePageHelper extends PageBase {
 
         System.out.println("Profile language: " + arrayProfile[1]);
         System.out.println("Family language: " + arrayFamily[1]);
-        signOfTruth = signOfTruth&arrayProfile[1].equals(arrayFamily[1]);
+        signOfTruth = signOfTruth & arrayProfile[1].equals(arrayFamily[1]);
         System.out.println("Language of the profile is equivalent to language of the family: "
                 + signOfTruth);
 
         System.out.println("Profile Food preference: " + arrayProfile[2]);
         System.out.println("Family Food preference: " + arrayFamily[2]);
-        signOfTruth = signOfTruth&arrayProfile[2].equals(arrayFamily[2]);
+        signOfTruth = signOfTruth & arrayProfile[2].equals(arrayFamily[2]);
         System.out.println("Food preference of the profile is equivalent to food preference of the family: "
                 + signOfTruth);
 
         System.out.println("Profile Email: " + arrayProfile[3]);
         System.out.println("Family Email: " + arrayFamily[3]);
-        signOfTruth = signOfTruth&arrayProfile[3].equals(arrayFamily[3]);
+        signOfTruth = signOfTruth & arrayProfile[3].equals(arrayFamily[3]);
         System.out.println("Email of the profile is equivalent to email of the family: "
                 + signOfTruth);
 
         System.out.println("Profile Last Name: : " + arrayProfile[4]);
         System.out.println("Family Last Name: : " + arrayFamily[4]);
-        signOfTruth = signOfTruth&arrayFamily[4].contains(arrayProfile[4]);
+        signOfTruth = signOfTruth & arrayFamily[4].contains(arrayProfile[4]);
         System.out.println("The family name of the profile is equivalent to the last name of the family: "
                 + signOfTruth);
 
         System.out.println("Profile Family Description: " + arrayProfile[5]);
         System.out.println("Family Family Description: " + arrayFamily[5]);
-        signOfTruth = signOfTruth&arrayProfile[5].equals(arrayFamily[5]);
+        signOfTruth = signOfTruth & arrayProfile[5].equals(arrayFamily[5]);
         System.out.println("Family description of the profile is equivalent to family description of the family: "
                 + signOfTruth);
 
         return signOfTruth;
     }
 }
+

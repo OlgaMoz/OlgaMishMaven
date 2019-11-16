@@ -19,7 +19,7 @@ public class FamilyPageHelper extends PageBase {
    /* public void openFamilyProfilePage() {
         openPage("family", By.id("fieldobjconfession"));
     }*/
-    public FamilyPageHelper openFamilyProfilePage() {
+    public FamilyPageHelper openFamilyProfilePage() throws InterruptedException {
         openPage(familyIcon, confessionField);
         return this;
     }

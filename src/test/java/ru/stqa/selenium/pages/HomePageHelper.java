@@ -1,5 +1,6 @@
 package ru.stqa.selenium.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -73,17 +74,29 @@ public class HomePageHelper extends PageBase {
         return correctPageIsLoaded(loginIcon, "Login");
     }
 
-    public boolean getAllHolidaysValuesForAllEventsChosenByFilterShabbat(){
+    public boolean getAllHolidaysValuesForAllEventsChosenByFilterShabbat(String holiday){
+        return getAllHolidaysValuesForAllEventsChosenByFilter(listHolidaysHoliday, holiday);
+    }
+
+  /*  public boolean getAllHolidaysValuesForAllEventsChosenByFilterShabbat(){
         return getAllHolidaysValuesForAllEventsChosenByFilter(listHolidaysHoliday, "Shabbat");
     }
+*/
+    public boolean getAllHolidaysValuesForAllEventsChosenByFilterKosher(String food) {
+        return getAllHolidaysValuesForAllEventsChosenByFilter(listHolidaysFood,food);
+    }
 
-    public boolean getAllHolidaysValuesForAllEventsChosenByFilterKosher() {
+  /*  public boolean getAllHolidaysValuesForAllEventsChosenByFilterKosher() {
         return getAllHolidaysValuesForAllEventsChosenByFilter(listHolidaysFood,"Kosher");
+    }*/
+
+    public boolean getAllHolidaysValuesForAllEventsChosenByFilterEnglish(String language) {
+       return getAllHolidaysValuesForAllEventsChosenByFilter(listHolidaysLanguage,language);
     }
 
-    public boolean getAllHolidaysValuesForAllEventsChosenByFilterEnglish() {
-       return getAllHolidaysValuesForAllEventsChosenByFilter(listHolidaysLanguage,"English");
-    }
+  /*  public boolean getAllHolidaysValuesForAllEventsChosenByFilterEnglish() {
+        return getAllHolidaysValuesForAllEventsChosenByFilter(listHolidaysLanguage,"English");
+    }*/
 
     public HomePageHelper waitThatFilterByHolidayAndAllOptionsAreLoaded() throws InterruptedException {
         waitThatFilterAndAllOptionsAreLoaded(filterHolidays, optionsHolidays);
@@ -100,35 +113,70 @@ public class HomePageHelper extends PageBase {
         return this;
     }
 
-    public HomePageHelper getSelectElementFilterByHoliday() throws InterruptedException {
+    public HomePageHelper getSelectElementFilterByHoliday(String holiday) throws InterruptedException {
+        getSelectElementFilterBy(filterHolidays, holiday, optionsHolidays);
+        return this;
+    }
+
+   /* public HomePageHelper getSelectElementFilterByHoliday() throws InterruptedException {
         getSelectElementFilterBy(filterHolidays, "Shabbat", optionsHolidays);
         return this;
+    }*/
+
+    public HomePageHelper getSelectElementFilterByFood(String food) throws InterruptedException {
+        getSelectElementFilterBy(filterFood, food, optionsFood);
+        return this;
     }
 
-    public HomePageHelper getSelectElementFilterByFood() throws InterruptedException {
+   /* public HomePageHelper getSelectElementFilterByFood() throws InterruptedException {
         getSelectElementFilterBy(filterFood, "Kosher", optionsFood);
         return this;
+    }*/
+
+    public HomePageHelper getSelectElementFilterByLanguage(String language) throws InterruptedException {
+        getSelectElementFilterBy(filterLanguages, language, optionsLanguage);
+        return this;
     }
 
-    public HomePageHelper getSelectElementFilterByLanguage() throws InterruptedException {
+ /*   public HomePageHelper getSelectElementFilterByLanguage() throws InterruptedException {
         getSelectElementFilterBy(filterLanguages, "English", optionsLanguage);
         return this;
+    }*/
+//-------------------------------------------------------------------------------------------------------------------
+    public HomePageHelper waitThatFilterHolidayIsChosenAndAllEventsByFilterAreLoaded(String holiday) {
+        waitThatFilterIsChosenAndAllEventsByFilterAreLoaded(By.xpath("//option[@selected][@value = '" + holiday +"']"));
+        return this;
     }
+  //  By.xpath("//option[@selected][@value = '" + holiday +"']")
 
-    public HomePageHelper waitThatFilterHolidayIsChosenAndAllEventsByFilterAreLoaded() {
+  /*  public HomePageHelper waitThatFilterHolidayIsChosenAndAllEventsByFilterAreLoaded(String holiday) {
         waitThatFilterIsChosenAndAllEventsByFiterAreLoaded(chosenFilterHolidays);
         return this;
-    }
+    }*/
+   /* public HomePageHelper waitThatFilterHolidayIsChosenAndAllEventsByFilterAreLoaded() {
+        waitThatFilterIsChosenAndAllEventsByFiterAreLoaded(chosenFilterHolidays);
+        return this;
+    }*/
 
-    public HomePageHelper waitThatFilterFoodIsChosenAndAllEventsByFilterAreLoaded() {
-        waitThatFilterIsChosenAndAllEventsByFiterAreLoaded(chosenFilterFood);
+    public HomePageHelper waitThatFilterFoodIsChosenAndAllEventsByFilterAreLoaded(String food) {
+        waitThatFilterIsChosenAndAllEventsByFilterAreLoaded(By.xpath("//option[@selected][@value = '" + food +"']"));
         return this;
     }
 
-    public HomePageHelper waitThatFilterLanguageIsChosenAndAllEventsByFilterAreLoaded() {
-        waitThatFilterIsChosenAndAllEventsByFiterAreLoaded(chosenFilterLanguage);
+ /*   public HomePageHelper waitThatFilterFoodIsChosenAndAllEventsByFilterAreLoaded() {
+        waitThatFilterIsChosenAndAllEventsByFilterAreLoaded(chosenFilterFood);
+        return this;
+    }*/
+
+    public HomePageHelper waitThatFilterLanguageIsChosenAndAllEventsByFilterAreLoaded(String language) {
+        waitThatFilterIsChosenAndAllEventsByFilterAreLoaded(By.xpath("//option[@selected][@value = '" + language +"']"));
         return this;
     }
+
+  /*  public HomePageHelper waitThatFilterLanguageIsChosenAndAllEventsByFilterAreLoaded() {
+        waitThatFilterIsChosenAndAllEventsByFilterAreLoaded(chosenFilterLanguage);
+        return this;
+    }*/
 
     public HomePageHelper verifyTheStatusClearButton() {
 

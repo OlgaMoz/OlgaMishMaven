@@ -1,11 +1,16 @@
-package ru.stqa.selenium;
+package ru.stqa.selenium.tests;
 
 import org.openqa.selenium.support.PageFactory;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-//import pages.*;
-import ru.stqa.selenium.pages.*;
+import ru.stqa.selenium.pages.HomePageAuthHelper;
+import ru.stqa.selenium.pages.HomePageHelper;
+import ru.stqa.selenium.pages.LoginPageHelper;
+import ru.stqa.selenium.pages.ProfilePageHelper;
+import ru.stqa.selenium.pages.FamilyPageHelper;
+
+import ru.stqa.selenium.util.DataProviders;
 
 public class ProfilePageTests<profilePage> extends TestBase {
    // PageBase pageBase;
@@ -17,12 +22,7 @@ public class ProfilePageTests<profilePage> extends TestBase {
 
 
     @BeforeMethod
-    public void initTests() {
-      /*  homePage = new HomePageHelper(driver);
-        loginPage = new LoginPageHelper(driver);
-        homePageAuth = new HomePageAuthHelper(driver);
-        profilePage = new ProfilePageHelper(driver);
-        familyPage = new FamilyPageHelper(driver);*/
+    public void initTests() throws InterruptedException {
 
         profilePage = PageFactory.initElements(driver, ProfilePageHelper.class);
         familyPage = PageFactory.initElements(driver, FamilyPageHelper.class);
@@ -35,13 +35,12 @@ public class ProfilePageTests<profilePage> extends TestBase {
         loginPage.openLoginPage()
         .initLoginTests(LOGIN, PASSWORD);
         profilePage.openProfilePage();
-       // driver.manage().window().maximize();
     }
 
-    @Test
-    public void lastNameOfFamilyChanging() throws InterruptedException {
+    @Test(dataProviderClass = DataProviders.class, dataProvider = "lastNameOfFamilyChangingT")
+    public void lastNameOfFamilyChanging(String lastName) throws InterruptedException {
         //----------------Generation of the new last name ---------------------
-        String lastName = profilePage.newLastNameGeneration();
+       // String lastName = profilePage.newLastNameGeneration();
         //-------------- Open in edit mode and change the last name --------------------
         profilePage.changeLastName(lastName);
 
@@ -50,7 +49,7 @@ public class ProfilePageTests<profilePage> extends TestBase {
     }
 
     @Test
-    public void profileAndFamilyPageComparing() {
+    public void profileAndFamilyPageComparing() throws InterruptedException {
         String[] profileDetails;
         String[] familyDetails;
         profileDetails = profilePage.saveDataFromTheProfilePage();

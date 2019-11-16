@@ -13,8 +13,8 @@ public class HomePageAuthHelper extends PageBase {
     }
 
 
-    public Boolean correctAuthorizationIsEnded(){
-        return profileIcon.getAttribute("title").contains(LOGIN);
+    public Boolean correctAuthorizationIsEnded(String login){
+        return profileIcon.getAttribute("title").contains(login);
     }
 
     public HomePageAuthHelper waitUntilHomePageAuthIsLoaded() {

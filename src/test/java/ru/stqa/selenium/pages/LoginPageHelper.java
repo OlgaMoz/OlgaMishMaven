@@ -28,7 +28,7 @@ public class LoginPageHelper extends PageBase {
         super(driver);
     }
 
-    public LoginPageHelper openLoginPage() {
+    public LoginPageHelper openLoginPage() throws InterruptedException {
         openPage(loginIcon, signInButton);
         return this;
     }
@@ -50,7 +50,7 @@ public class LoginPageHelper extends PageBase {
         return this;
     }
 
-    public boolean loginToTheSystemIncorrect() {
+    public boolean loginToTheSystemIncorrect() throws InterruptedException {
         waitUntilElementIsVisible(wrongAuth, 30);
         return wrongAuth.getText().contains("Wrong Authorization!");
     }

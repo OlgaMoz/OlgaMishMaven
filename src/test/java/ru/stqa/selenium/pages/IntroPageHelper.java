@@ -15,7 +15,7 @@ public class IntroPageHelper extends PageBase{
         super(driver);
     }
 
-    public IntroPageHelper openIntroPage() {
+    public IntroPageHelper openIntroPage() throws InterruptedException {
         openPage(closedIntro, headerFilters);
         return this;
     }
